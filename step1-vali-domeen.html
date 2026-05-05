@@ -21,7 +21,7 @@
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: #1a1a2e; }
     h1 { font-family: 'DM Serif Display', serif; font-size: 2rem; }
 
-    /* Stepper */
+
     .stepper { display: flex; justify-content: center; align-items: flex-start; gap: 0; padding: 2rem 0 1.5rem; }
     .step { display: flex; flex-direction: column; align-items: center; position: relative; min-width: 130px; }
     .step:not(:last-child)::after {
@@ -39,48 +39,94 @@
     .step.active .step-label { color: var(--step-active); }
     .step.done .step-label { color: var(--step-done); }
 
-    /* Search */
+
     .search-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
     .domain-input-group .form-control { border-right: none; font-size: 1.05rem; border-radius: 8px 0 0 8px; }
     .domain-input-group .tld-select { border-left: none; border-right: none; background: #f0f4ff; color: var(--brand); font-weight: 600; cursor: pointer; }
     .domain-input-group .btn-search { border-radius: 0 8px 8px 0; background: var(--brand); color: #fff; font-weight: 600; padding: 0 1.5rem; border: none; }
     .domain-input-group .btn-search:hover { background: #1342b0; }
 
-    /* Results */
+  
     .result-item { display: flex; justify-content: space-between; align-items: center; padding: .85rem 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: .6rem; background: #fff; }
     .result-item.taken { opacity: .65; background: #fafafa; }
     .result-item .domain-name { font-weight: 600; font-size: .95rem; }
-    .result-item .badge-available { background: #d4edda; color: #155724; font-size: .72rem; padding: .25em .6em; border-radius: 4px; font-weight: 600; }
-    .result-item .badge-taken { background: #f8d7da; color: #721c24; font-size: .72rem; padding: .25em .6em; border-radius: 4px; font-weight: 600; }
+    .badge-available { background: #d4edda; color: #155724; font-size: .72rem; padding: .25em .6em; border-radius: 4px; font-weight: 600; }
+    .badge-taken { background: #f8d7da; color: #721c24; font-size: .72rem; padding: .25em .6em; border-radius: 4px; font-weight: 600; }
     .result-item .price { font-size: .9rem; color: #333; font-weight: 500; }
     .result-item .btn-add { font-size: .8rem; padding: .3rem .85rem; }
+    .info-icon { color: var(--step-inactive); cursor: pointer; font-size: .78rem; margin-left: .2rem; }
+    .detail-link { font-size: .75rem; color: var(--brand); cursor: pointer; text-decoration: underline dotted; }
 
-    /* Period selector */
+
     .period-select label { font-weight: 500; margin-bottom: .4rem; display: block; }
     .period-pills { display: flex; gap: .5rem; flex-wrap: wrap; }
     .period-pill input { display: none; }
-    .period-pill label {
-      padding: .4rem .9rem; border: 1.5px solid var(--border); border-radius: 20px; cursor: pointer;
-      font-size: .82rem; font-weight: 500; transition: all .15s;
-    }
+    .period-pill label { padding: .4rem .9rem; border: 1.5px solid var(--border); border-radius: 20px; cursor: pointer; font-size: .82rem; font-weight: 500; transition: all .15s; }
     .period-pill input:checked + label { border-color: var(--brand); background: var(--brand-light); color: var(--brand); }
 
-    /* Order summary */
+ 
     .order-summary { background: #fff; border: 1.5px solid var(--brand); border-radius: 12px; padding: 1.25rem; }
     .order-summary .summary-title { font-weight: 700; font-size: .95rem; color: var(--brand); margin-bottom: .75rem; }
     .order-summary .summary-row { display: flex; justify-content: space-between; font-size: .88rem; margin-bottom: .4rem; }
     .order-summary .total-row { border-top: 1px solid var(--border); padding-top: .6rem; margin-top: .4rem; font-weight: 700; font-size: 1rem; }
-
     .btn-primary-custom { background: var(--brand); color: #fff; border: none; border-radius: 8px; font-weight: 600; padding: .75rem 2rem; transition: background .15s; }
     .btn-primary-custom:hover { background: #1342b0; color: #fff; }
-    .btn-primary-custom:disabled { background: #adb5bd; cursor: not-allowed; }
+
+
+    .faq-section { margin-top: 2.5rem; }
+    .faq-section h2 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 1rem; }
+    .accordion-button { font-weight: 500; font-size: .93rem; }
+    .accordion-button:not(.collapsed) { color: var(--brand); background-color: var(--brand-light); }
+    .accordion-button:focus { box-shadow: 0 0 0 3px rgba(26,86,219,.15); }
+    .accordion-body { font-size: .9rem; color: #555; line-height: 1.65; }
+
+    .toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 1100; }
+
+    .modal-detail-table td { font-size: .88rem; padding: .4rem .6rem; }
+    .modal-detail-table td:first-child { color: #666; font-weight: 500; width: 45%; }
+    .modal-detail-table td:last-child { font-weight: 600; }
+    .whois-badge { display: inline-block; background: #f8d7da; color: #721c24; font-size: .75rem; padding: .2em .6em; border-radius: 4px; font-weight: 600; }
   </style>
 </head>
 <body>
 
-<div class="container" style="max-width:820px; padding-top: 1rem;">
 
-  <!-- Stepper -->
+<div class="toast-container">
+  <div id="cartToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg">✓ Domeen lisatud ostukorvi!</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Sulge"></button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="domainModal" tabindex="-1" aria-labelledby="domainModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="domainModalLabel">Domeeni info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Sulge"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modalDomainName" class="fw-bold mb-3" style="font-size:1.1rem;"></div>
+        <table class="table table-borderless modal-detail-table mb-0" id="modalTable">
+          <tbody></tbody>
+        </table>
+        <div class="alert alert-info mt-3 mb-0" style="font-size:.83rem;">
+          💡 Domeen aktiveeritakse 15–30 minuti jooksul pärast makse laekumist.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Sulge</button>
+        <button type="button" class="btn btn-primary" id="modalAddBtn">+ Lisa ostukorvi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container" style="max-width:820px; padding-top: 1rem; padding-bottom: 3rem;">
+
   <div class="stepper">
     <div class="step active">
       <div class="step-circle">1</div>
@@ -96,7 +142,6 @@
     </div>
   </div>
 
-  <!-- Title -->
   <div class="text-center mb-4">
     <h1>Otsi domeeni</h1>
   </div>
@@ -105,9 +150,9 @@
     <div class="col-lg-8">
       <div class="search-card">
 
-        <!-- Search bar -->
+
         <div class="input-group domain-input-group mb-4">
-          <input type="text" class="form-control" placeholder="sinudomeen" id="domainInput" value="kjhgfdsa"/>
+          <input type="text" class="form-control" placeholder="sinudomeen" id="domainInput" value="dunnhavel"/>
           <select class="form-select tld-select" id="tldSelect" style="max-width:110px;">
             <option value=".ee">.ee</option>
             <option value=".eu">.eu</option>
@@ -118,84 +163,195 @@
           <button class="btn btn-search" type="button">Otsi</button>
         </div>
 
-        <!-- Results -->
+
         <div id="results">
-          <!-- Primary result -->
+
+
           <div class="result-item">
             <div>
-              <div class="domain-name">kjhgfdsa.eu</div>
+              <div class="domain-name">
+                dunnhavel.eu
+                <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title=".eu — Euroopa Liidu tippdomeen. Sobib kõikidele EL-i ettevõtetele.">ⓘ</span>
+              </div>
               <span class="badge-available">Saadaval</span>
+              &nbsp;<span class="detail-link" onclick="openModal('dunnhavel.eu')">vaata infot</span>
             </div>
             <div class="d-flex align-items-center gap-3">
               <div>
-                <div class="price">4.50 € <small class="text-muted">+ km</small></div>
-                <div style="font-size:.72rem; color:#666;">/ aasta</div>
+                <div class="price" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Hind ilma käibemaksuta. KM 22% lisandub kassas.">
+                  4.50 € <small class="text-muted">+ km</small>
+                </div>
+                <div style="font-size:.72rem;color:#666;">/ aasta</div>
               </div>
-              <button class="btn btn-outline-primary btn-add" onclick="addToCart(this, 'kjhgfdsa.eu', 4.50)">+ Lisa</button>
+              <button class="btn btn-outline-primary btn-add" id="btn-dunnhavel.eu"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Lisa domeeni ostukorvi"
+                onclick="addToCart(this,'dunnhavel.eu',4.50)">+ Lisa</button>
             </div>
           </div>
 
-          <!-- Suggestions -->
-          <p class="text-muted" style="font-size:.82rem; margin: 1rem 0 .5rem;">Võib teile ka huvi pakkuda:</p>
+          <p class="text-muted" style="font-size:.82rem;margin:1rem 0 .5rem;">Võib teile ka huvi pakkuda:</p>
 
-          <div class="result-item">
+          <div class="result-item taken">
             <div>
-              <div class="domain-name">kjhgfdsa.ee</div>
+              <div class="domain-name">
+                driftlabs.ee
+                <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title=".ee — Eesti riiklik tippdomeen. Haldab Eesti Interneti Sihtasutus.">ⓘ</span>
+              </div>
               <span class="badge-taken">Hõivatud</span>
+              &nbsp;<span class="detail-link" onclick="openModal('driftlabs.ee')">WHOIS andmed</span>
             </div>
-            <div class="text-muted" style="font-size:.82rem;">WHOIS andmed</div>
+            <div class="text-muted" style="font-size:.82rem;">Pole saadaval</div>
+          </div>
+
+
+          <div class="result-item">
+            <div>
+              <div class="domain-name">
+                neonburrito.com
+                <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title=".com — maailma populaarseim tippdomeen. Ideaalne rahvusvaheliseks.">ⓘ</span>
+              </div>
+              <span class="badge-available">Saadaval</span>
+              &nbsp;<span class="detail-link" onclick="openModal('neonburrito.com')">vaata infot</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <div>
+                <div class="price" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Hind ilma käibemaksuta. KM 22% lisandub kassas.">
+                  12.00 € <small class="text-muted">+ km</small>
+                </div>
+                <div style="font-size:.72rem;color:#666;">/ aasta</div>
+              </div>
+              <button class="btn btn-outline-primary btn-add" id="btn-neonburrito.com"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Lisa domeeni ostukorvi"
+                onclick="addToCart(this,'neonburrito.com',12.00)">+ Lisa</button>
+            </div>
           </div>
 
           <div class="result-item">
             <div>
-              <div class="domain-name">kjhgfdsa.com</div>
+              <div class="domain-name">
+                lunarvault.net
+                <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title=".net — populaarne alternatiiv .com-ile. Sobib tehnikafirmadele.">ⓘ</span>
+              </div>
               <span class="badge-available">Saadaval</span>
+              &nbsp;<span class="detail-link" onclick="openModal('lunarvault.net')">vaata infot</span>
             </div>
             <div class="d-flex align-items-center gap-3">
               <div>
-                <div class="price">12.00 € <small class="text-muted">+ km</small></div>
-                <div style="font-size:.72rem; color:#666;">/ aasta</div>
+                <div class="price" data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Hind ilma käibemaksuta. KM 22% lisandub kassas.">
+                  10.00 € <small class="text-muted">+ km</small>
+                </div>
+                <div style="font-size:.72rem;color:#666;">/ aasta</div>
               </div>
-              <button class="btn btn-outline-primary btn-add" onclick="addToCart(this, 'kjhgfdsa.com', 12.00)">+ Lisa</button>
-            </div>
-          </div>
-
-          <div class="result-item">
-            <div>
-              <div class="domain-name">kjhgfdsa.net</div>
-              <span class="badge-available">Saadaval</span>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-              <div>
-                <div class="price">10.00 € <small class="text-muted">+ km</small></div>
-                <div style="font-size:.72rem; color:#666;">/ aasta</div>
-              </div>
-              <button class="btn btn-outline-primary btn-add" onclick="addToCart(this, 'kjhgfdsa.net', 10.00)">+ Lisa</button>
+              <button class="btn btn-outline-primary btn-add" id="btn-lunarvault.net"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Lisa domeeni ostukorvi"
+                onclick="addToCart(this,'lunarvault.net',10.00)">+ Lisa</button>
             </div>
           </div>
         </div>
 
-        <!-- Period selector -->
         <div class="period-select mt-4">
-          <label>Registreerimisperiood:</label>
+          <label>
+            Registreerimisperiood:
+            <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="right"
+              title="Pikem periood = väiksem aastahind. Saad pikendada igal ajal.">ⓘ</span>
+          </label>
           <div class="period-pills">
-            <div class="period-pill"><input type="radio" name="period" id="p6" value="0.5"/><label for="p6">6 kuud</label></div>
-            <div class="period-pill"><input type="radio" name="period" id="p1" value="1" checked/><label for="p1">1 aasta</label></div>
-            <div class="period-pill"><input type="radio" name="period" id="p2" value="2"/><label for="p2">2 aastat</label></div>
-            <div class="period-pill"><input type="radio" name="period" id="p5" value="5"/><label for="p5">5 aastat</label></div>
+            <div class="period-pill"><input type="radio" name="period" id="p6"  value="0.5"/><label for="p6">6 kuud</label></div>
+            <div class="period-pill"><input type="radio" name="period" id="p1"  value="1" checked/><label for="p1">1 aasta</label></div>
+            <div class="period-pill"><input type="radio" name="period" id="p2"  value="2"/><label for="p2">2 aastat</label></div>
+            <div class="period-pill"><input type="radio" name="period" id="p5"  value="5"/><label for="p5">5 aastat</label></div>
             <div class="period-pill"><input type="radio" name="period" id="p10" value="10"/><label for="p10">10 aastat</label></div>
           </div>
         </div>
 
       </div>
+
+      <div class="faq-section">
+        <h2>Korduma kippuvad küsimused</h2>
+        <div class="accordion" id="faqAccordion">
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                Mis on domeen ja miks mul seda vaja on?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Domeen on sinu veebiaadress internetis — näiteks <strong>sinufirma.ee</strong>. See on vajalik, et kliendid leiaksid sinu veebisaidi, e-poe või meiliaadressi. Ilma domeenita ei ole sul püsivat kohalolekut internetis.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                Kas saan registreerida mitu domeeni korraga?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Jah! Lisa mitu domeeni ostukorvi ja registreeri kõik ühe tellimusega. Soovitame kindlustada oma brändi nii .ee, .eu kui .com laiendiga — see kaitseb sind konkurentide eest.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                Mis juhtub, kui domeen on hõivatud?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Kui soovitud domeen on juba registreeritud, saad vaadata WHOIS andmeid omaniku kohta. Samuti soovitame proovida alternatiivseid laiendeid — sageli on .eu või .com vabalt saadaval.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                Millal hakkab domeen tööle pärast ostmist?
+              </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Enamik domeene aktiveeritakse <strong>15–30 minuti</strong> jooksul pärast makse laekumist. DNS-i levikuks võib kuluda kuni 24 tundi, kuid praktikas juhtub see kiiremini.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
+                Kas saan domeeni hiljem üle kanda teisele registripidajale?
+              </button>
+            </h2>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Jah, domeenitransfer on võimalik igal ajal. Selleks vajad AUTH-koodi, mille saad meie kliendipaneelist. Transfer võtab tavaliselt 5–7 tööpäeva.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
 
-    <!-- Order summary sidebar -->
     <div class="col-lg-4">
       <div class="order-summary">
         <div class="summary-title">Tellimus</div>
         <div id="cartItems">
-          <div class="text-muted text-center py-3" style="font-size:.85rem;" id="emptyCart">Lisa domeene ostukorvi</div>
+          <div class="text-muted text-center py-3" style="font-size:.85rem;">Lisa domeene ostukorvi</div>
         </div>
         <div id="cartTotal" style="display:none;">
           <div class="summary-row total-row">
@@ -206,9 +362,21 @@
       </div>
 
       <div class="mt-3 d-grid">
-        <a href="step2-sisesta-andmed.html" class="btn btn-primary-custom text-center text-decoration-none" id="nextBtn" style="opacity:.5; pointer-events:none;">
+        <a href="step2-sisesta-andmed.html"
+           class="btn btn-primary-custom text-center text-decoration-none"
+           id="nextBtn"
+           style="opacity:.5; pointer-events:none;"
+           data-bs-toggle="tooltip"
+           data-bs-placement="bottom"
+           title="Lisa vähemalt üks domeen, et jätkata">
           Edasi andmeid sisestama &rarr;
         </a>
+      </div>
+
+      <div class="mt-3 p-3 bg-white rounded-3 border" style="font-size:.8rem;color:#555;">
+        <div class="d-flex align-items-center gap-2 mb-2">🔒 <span>SSL-krüpteeritud makse</span></div>
+        <div class="d-flex align-items-center gap-2 mb-2">🛡️ <span>30-päeva raha tagasi garantii</span></div>
+        <div class="d-flex align-items-center gap-2">📞 <span>Eestikeelne tugi tööpäeviti</span></div>
       </div>
     </div>
   </div>
@@ -217,63 +385,114 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+  const domains = {
+    'dunnhavel.eu':   { tld:'.eu',  registrar:'EURid',    available:true,  price:4.50,  desc:'Euroopa Liidu tippdomeen. Sobib ettevõtetele ja eraisikutele EL-is.' },
+    'driftlabs.ee':   { tld:'.ee',  registrar:'EIS',      available:false, price:null,  desc:'Eesti riiklik tippdomeen. Praegu hõivatud.' },
+    'neonburrito.com':{ tld:'.com', registrar:'Verisign', available:true,  price:12.00, desc:'Maailma populaarseim domeen. Ideaalne rahvusvaheliseks kasutuseks.' },
+    'lunarvault.net': { tld:'.net', registrar:'Verisign', available:true,  price:10.00, desc:'Populaarne alternatiiv .com-ile. Sobib eriti tehnikafirmadele.' },
+  };
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el =>
+      new bootstrap.Tooltip(el, { trigger: 'hover focus' })
+    );
+  });
+
   let cart = [];
 
   function addToCart(btn, domain, price) {
     if (cart.find(i => i.domain === domain)) return;
     cart.push({ domain, price });
+    const tt = bootstrap.Tooltip.getInstance(btn);
+    if (tt) tt.hide();
     btn.textContent = '✓ Lisatud';
     btn.disabled = true;
-    btn.classList.remove('btn-outline-primary');
-    btn.classList.add('btn-success');
+    btn.classList.replace('btn-outline-primary', 'btn-success');
+    btn.removeAttribute('data-bs-toggle');
     renderCart();
+    showToast(domain);
   }
 
   function removeFromCart(domain) {
     cart = cart.filter(i => i.domain !== domain);
-    // Re-enable add buttons
-    document.querySelectorAll('.btn-add').forEach(b => {
-      if (b.onclick.toString().includes(domain)) {
-        b.textContent = '+ Lisa'; b.disabled = false;
-        b.classList.add('btn-outline-primary'); b.classList.remove('btn-success');
-      }
-    });
+    const btn = document.getElementById('btn-' + domain);
+    if (btn) {
+      btn.textContent = '+ Lisa';
+      btn.disabled = false;
+      btn.classList.replace('btn-success', 'btn-outline-primary');
+      btn.setAttribute('data-bs-toggle', 'tooltip');
+      new bootstrap.Tooltip(btn, { trigger: 'hover focus' });
+    }
     renderCart();
   }
 
   function renderCart() {
     const container = document.getElementById('cartItems');
-    const empty = document.getElementById('emptyCart');
-    const totalDiv = document.getElementById('cartTotal');
-    const nextBtn = document.getElementById('nextBtn');
-
+    const totalDiv  = document.getElementById('cartTotal');
+    const nextBtn   = document.getElementById('nextBtn');
     if (cart.length === 0) {
       container.innerHTML = '<div class="text-muted text-center py-3" style="font-size:.85rem;">Lisa domeene ostukorvi</div>';
       totalDiv.style.display = 'none';
       nextBtn.style.opacity = '.5'; nextBtn.style.pointerEvents = 'none';
       return;
     }
-
-    let html = '';
-    let total = 0;
+    let html = '', total = 0;
     cart.forEach(item => {
       total += item.price;
-      html += `<div class="summary-row align-items-start">
+      html += `<div class="summary-row align-items-start mb-2">
         <div>
           <div style="font-weight:600;font-size:.88rem;">${item.domain}</div>
           <div style="font-size:.75rem;color:#666;">Registreering (1 aasta)</div>
         </div>
         <div class="d-flex align-items-center gap-1">
           <span style="font-size:.88rem;">${item.price.toFixed(2)} €</span>
-          <button onclick="removeFromCart('${item.domain}')" style="background:none;border:none;color:#dc3545;font-size:.8rem;padding:0 0 0 4px;cursor:pointer;">✕</button>
+          <button onclick="removeFromCart('${item.domain}')" style="background:none;border:none;color:#dc3545;font-size:.8rem;padding:0 0 0 4px;cursor:pointer;" title="Eemalda">✕</button>
         </div>
       </div>`;
     });
-
     container.innerHTML = html;
     document.getElementById('totalPrice').textContent = total.toFixed(2) + ' € + km';
     totalDiv.style.display = 'block';
     nextBtn.style.opacity = '1'; nextBtn.style.pointerEvents = 'auto';
+  }
+
+
+  function showToast(domain) {
+    document.getElementById('toastMsg').textContent = '✓ ' + domain + ' lisatud ostukorvi!';
+    bootstrap.Toast.getOrCreateInstance(document.getElementById('cartToast'), { delay: 3000 }).show();
+  }
+
+  function openModal(domain) {
+    const d = domains[domain] || {};
+    document.getElementById('domainModalLabel').textContent = d.available ? 'Domeeni info' : 'WHOIS andmed';
+    document.getElementById('modalDomainName').textContent = domain;
+
+    document.querySelector('#modalTable tbody').innerHTML = `
+      <tr><td>Laiend</td><td>${d.tld || '—'}</td></tr>
+      <tr><td>Registripidaja</td><td>${d.registrar || '—'}</td></tr>
+      <tr><td>Registreerimisperiood</td><td>1–10 aastat</td></tr>
+      <tr><td>Hind (+ km)</td><td>${d.price ? d.price.toFixed(2) + ' € / aasta' : '<span class="whois-badge">Hõivatud</span>'}</td></tr>
+      <tr><td>Saadavus</td><td>${d.available
+        ? '<span style="color:#0f9d58;font-weight:700;">✓ Saadaval</span>'
+        : '<span style="color:#dc3545;font-weight:700;">✗ Hõivatud</span>'}</td></tr>
+      <tr><td colspan="2" style="color:#555;font-size:.85rem;padding-top:.6rem;">${d.desc || ''}</td></tr>
+    `;
+
+    const addBtn = document.getElementById('modalAddBtn');
+    if (d.available) {
+      addBtn.style.display = '';
+      addBtn.onclick = () => {
+        const origBtn = document.getElementById('btn-' + domain);
+        if (origBtn && !origBtn.disabled) addToCart(origBtn, domain, d.price);
+        bootstrap.Modal.getInstance(document.getElementById('domainModal')).hide();
+      };
+    } else {
+      addBtn.style.display = 'none';
+    }
+
+    new bootstrap.Modal(document.getElementById('domainModal')).show();
   }
 </script>
 </body>

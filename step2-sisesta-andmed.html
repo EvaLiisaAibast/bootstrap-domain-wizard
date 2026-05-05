@@ -59,7 +59,6 @@
       color: #6c757d; margin-bottom: 1rem; padding-bottom: .4rem; border-bottom: 1px solid var(--border);
     }
 
-    /* Order summary sidebar */
     .order-summary { background: #fff; border: 1.5px solid var(--brand); border-radius: 12px; padding: 1.25rem; position: sticky; top: 1.5rem; }
     .summary-title { font-weight: 700; font-size: .95rem; color: var(--brand); margin-bottom: .75rem; }
     .summary-row { display: flex; justify-content: space-between; font-size: .87rem; margin-bottom: .5rem; }
@@ -81,7 +80,6 @@
 
 <div class="container" style="max-width:820px; padding-top: 1rem;">
 
-  <!-- Stepper -->
   <div class="stepper">
     <div class="step done">
       <div class="step-circle">✓</div>
@@ -97,7 +95,7 @@
     </div>
   </div>
 
-  <!-- Title -->
+
   <div class="text-center mb-4">
     <h1>Sisesta andmed</h1>
     <p class="text-muted" style="font-size:.9rem;">Ainult domeeni registreerimiseks vajalikud väljad</p>
@@ -107,7 +105,6 @@
     <div class="col-lg-8">
       <div class="form-card">
 
-        <!-- Personal / Company toggle -->
         <div class="section-label">Kliendi tüüp</div>
         <div class="type-toggle">
           <input type="radio" name="clientType" id="eraisik" value="eraisik" checked onchange="toggleCompany(false)"/>
@@ -116,7 +113,7 @@
           <label for="ettevote">🏢 Ettevõte</label>
         </div>
 
-        <!-- Contact fields -->
+     
         <div class="section-label">Kontaktandmed</div>
 
         <div class="row g-3 mb-3">
@@ -136,7 +133,6 @@
           <div class="form-text">Arve ja tellimuse kokkuvõte saadetakse sellele aadressile.</div>
         </div>
 
-        <!-- Company fields (conditional) -->
         <div class="company-fields" id="companyFields">
           <div class="section-label mt-1">Ettevõtte andmed</div>
           <div class="mb-3">
@@ -153,33 +149,35 @@
           </div>
         </div>
 
-        <!-- Terms -->
         <div class="mt-4">
           <div class="form-check terms-check">
             <input class="form-check-input" type="checkbox" id="terms" required/>
             <label class="form-check-label" for="terms">
-              Nõustun <a href="#">teenuse tingimustega</a> ja <a href="#">privaatsuspoliitikaga</a>
+              Nõustun
+              <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">teenuse tingimustega</a>
+              ja
+              <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">privaatsuspoliitikaga</a>
             </label>
           </div>
         </div>
 
       </div>
 
-      <!-- Navigation -->
+    
       <div class="d-flex justify-content-between align-items-center mt-3">
         <a href="step1-vali-domeen.html" class="btn-back">&larr; Tagasi</a>
         <a href="step3-maksa.html" class="btn btn-primary-custom">Kinnita tellimus &rarr;</a>
       </div>
     </div>
 
-    <!-- Order summary sidebar -->
+
     <div class="col-lg-4">
       <div class="order-summary">
         <div class="summary-title">Tellimuse kokkuvõte</div>
 
         <div class="summary-row">
           <div>
-            <span style="font-weight:600;">kjhgfdsa.eu</span>
+            <span style="font-weight:600;">dunnhavel.eu</span>
             <small>Registreering · 1 aasta</small>
           </div>
           <span>4.50 €</span>
@@ -205,6 +203,107 @@
     </div>
   </div>
 
+</div>
+
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsModalLabel">Teenuse tingimused</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Sulge"></button>
+      </div>
+      <div class="modal-body" style="max-height:65vh; overflow-y:auto; font-size:.9rem; line-height:1.7; color:#444;">
+
+        <p class="text-muted" style="font-size:.8rem;">Viimati uuendatud: 1. jaanuar 2025</p>
+
+        <h6 class="fw-bold mt-3">1. Üldtingimused</h6>
+        <p>Kasutades meie domeeniregistreerimise teenust, nõustute käesolevate tingimustega. Teenust pakub Dunnhavel OÜ, registrikood 12345678, aadress Tallinn, Eesti. Tingimused kehtivad kõikidele kasutajatele, kes registreerivad domeene meie platvormi kaudu.</p>
+
+        <h6 class="fw-bold mt-3">2. Domeeniregistreerimine</h6>
+        <p>Domeeniregistreerimine toimub vastavalt registripidaja (EIS, EURid, Verisign jt) reeglitele. Domeeni registreerimine ei tähenda automaatselt kaubamärgiõiguste omandamist. Registreerimine kinnitatakse pärast makse laekumist 15–30 minuti jooksul.</p>
+        <p>Klient vastutab selle eest, et registreeritav domeen ei riku kolmandate isikute intellektuaalomandi õigusi. Dunnhavel OÜ-l on õigus keelduda domeeni registreerimisest ilma põhjenduseta.</p>
+
+        <h6 class="fw-bold mt-3">3. Hinnad ja maksmine</h6>
+        <p>Kõik hinnad on esitatud eurodes ilma käibemaksuta. Käibemaks (22%) lisandub lõpphinnale. Makse tuleb tasuda enne domeeni aktiveerimist. Aktsepteerime pangalinki, maksekaarte (Visa, Mastercard) ning arveid ettevõtetele.</p>
+
+        <h6 class="fw-bold mt-3">4. Pikendamine ja lõpetamine</h6>
+        <p>Domeen registreeritakse valitud perioodiks (6 kuud kuni 10 aastat). Enne perioodi lõppu saadetakse meeldetuletus e-mailile. Pikendamata domeeni registreerimine vabastatakse 30 päeva pärast perioodi lõppu. Dunnhavel OÜ ei vastuta pikendamata jäänud domeenide eest.</p>
+
+        <h6 class="fw-bold mt-3">5. Tagastuspoliitika</h6>
+        <p>Pakume 30-päevast raha tagasi garantiid alates domeeni registreerimise kuupäevast. Tagastus ei kehti .ee domeenidele, mille registreerimine on juba kinnitatud EIS-i poolt. Tagastamistaotluse esitamiseks võtke ühendust meie klienditoega.</p>
+
+        <h6 class="fw-bold mt-3">6. Vastutuse piirang</h6>
+        <p>Dunnhavel OÜ ei vastuta kahju eest, mis tuleneb domeeni kättesaamatusest, DNS-i viivitustest, kolmandate osapoolte teenuste katkestustest ega vääramatu jõu asjaoludest. Meie maksimaalne vastutus on piiratud teenuse eest makstud summaga.</p>
+
+        <h6 class="fw-bold mt-3">7. Tingimuste muutmine</h6>
+        <p>Jätame endale õiguse tingimusi igal ajal muuta. Oluliste muutuste korral teavitatakse kliente e-posti teel vähemalt 14 päeva ette. Teenuse edasine kasutamine pärast muudatuste jõustumist loetakse nõustumiseks uute tingimustega.</p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Sulge</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="document.getElementById('terms').checked=true">
+          ✓ Nõustun tingimustega
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="privacyModalLabel">Privaatsuspoliitika</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Sulge"></button>
+      </div>
+      <div class="modal-body" style="max-height:65vh; overflow-y:auto; font-size:.9rem; line-height:1.7; color:#444;">
+
+        <p class="text-muted" style="font-size:.8rem;">Viimati uuendatud: 1. jaanuar 2025</p>
+
+        <h6 class="fw-bold mt-3">1. Vastutav töötleja</h6>
+        <p>Isikuandmete vastutav töötleja on Dunnhavel OÜ (registrikood 12345678), e-post: andmekaitse@dunnhavel.eu. Töötleme isikuandmeid kooskõlas Euroopa Liidu isikuandmete kaitse üldmääruse (GDPR) ja Eesti isikuandmete kaitse seadusega.</p>
+
+        <h6 class="fw-bold mt-3">2. Milliseid andmeid kogume</h6>
+        <p>Kogume järgmisi andmeid domeeni registreerimisel:</p>
+        <ul>
+          <li>Nimi ja perekonnanimi</li>
+          <li>E-posti aadress</li>
+          <li>Ettevõtte andmed (nimi, registrikood, KMKR — ettevõtete puhul)</li>
+          <li>Makseandmed (kaardifirma poolt turvalise ühenduse kaudu)</li>
+          <li>Tehniline info: IP-aadress, brauser, seadme tüüp</li>
+        </ul>
+
+        <h6 class="fw-bold mt-3">3. Andmete kasutamise eesmärk</h6>
+        <p>Kasutame kogutud andmeid järgmistel eesmärkidel:</p>
+        <ul>
+          <li>Domeeni registreerimiseks ja haldamiseks</li>
+          <li>Arvete ja tellimuse kokkuvõtete saatmiseks</li>
+          <li>Klienditeeninduse osutamiseks</li>
+          <li>Seaduslike kohustuste täitmiseks (raamatupidamine, maksuaruandlus)</li>
+          <li>Teenuse parendamiseks (anonüümsed statistilised andmed)</li>
+        </ul>
+
+        <h6 class="fw-bold mt-3">4. Andmete jagamine kolmandate osapooltega</h6>
+        <p>Edastame andmeid kolmandatele osapooltele üksnes teenuse osutamiseks vajalikus ulatuses: registripidajatele (EIS, EURid, Verisign), maksetöötlejatele ning raamatupidamistarkvara pakkujatele. Andmeid ei müüda ega jagata turunduslikel eesmärkidel.</p>
+
+        <h6 class="fw-bold mt-3">5. Andmete säilitamine</h6>
+        <p>Säilitame isikuandmeid seni, kuni see on vajalik teenuse osutamiseks, ning seejärel vastavalt seaduses sätestatud tähtaegadele (raamatupidamisdokumendid kuni 7 aastat). WHOIS-andmed säilitatakse vastavalt registripidaja nõuetele.</p>
+
+        <h6 class="fw-bold mt-3">6. Teie õigused</h6>
+        <p>Teil on õigus tutvuda oma isikuandmetega, nõuda nende parandamist, kustutamist või töötlemise piiramist. Andmekaitsealaste küsimustega pöörduge: <strong>andmekaitse@dunnhavel.eu</strong>. Kaebuse esitamise õigus on ka Andmekaitse Inspektsioonile (aki.ee).</p>
+
+        <h6 class="fw-bold mt-3">7. Küpsised</h6>
+        <p>Kasutame ainult teenuse toimimiseks hädavajalikke küpsiseid (seansihaldus, turvalisus). Analüütilisi ega turundusküpsiseid ilma nõusolekuta ei kasutata.</p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Sulge</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="document.getElementById('terms').checked=true">
+          ✓ Olen tutvunud
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
